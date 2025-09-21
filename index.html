@@ -1,0 +1,910 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carmanyo - Luxury Cars Delivered Worldwide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #e63946;
+            --accent: #f1faee;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #e63946, #457b9d, #a8dadc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-icon {
+            font-size: 2.2rem;
+            color: #e63946;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a:hover {
+            color: #e63946;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #e63946;
+            transition: var(--transition);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            background: #e63946;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #c1121f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e63946;
+            color: #e63946;
+        }
+        
+        .btn-outline:hover {
+            background: #e63946;
+            color: white;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: var(--primary);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #e63946;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #e63946;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .feature-desc {
+            color: #a8a8a8;
+            line-height: 1.6;
+        }
+        
+        /* Inventory Preview */
+        .inventory {
+            padding: 6rem 5%;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1583121274602-3e2820c69884?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .car-card {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .car-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .car-card:hover .car-img {
+            transform: scale(1.05);
+        }
+        
+        .car-info {
+            padding: 1.5rem;
+        }
+        
+        .car-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .car-price {
+            color: #e63946;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            color: #a8a8a8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Contact Form Section */
+        .contact {
+            padding: 6rem 5%;
+            background: var(--primary);
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-methods {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 15px;
+        }
+        
+        .contact-email {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e63946;
+            word-break: break-all;
+            margin: 0.5rem 0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #e63946;
+            background: rgba(230, 57, 70, 0.1);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #121212;
+            padding: 4rem 5% 2rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: #a8a8a8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: #e63946;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: #e63946;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            color: #a8a8a8;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                font-size: 1.5rem;
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        /* Loading Animation for Slides */
+        .slide-loader {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .slide-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slide-indicator.active {
+            background: #e63946;
+            transform: scale(1.2);
+        }
+        
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: #e63946;
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-car logo-icon"></i>
+            <h1 class="logo">CARMANYO</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Why Us</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="#contact" class="btn">Get Started</a>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slides">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69884?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1491895333327-993ef6bd45a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');"></div>
+        </div>
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title animate">DRIVE YOUR DREAM CAR<br>ANYWHERE IN THE WORLD</h1>
+            <p class="hero-subtitle animate">Carmanyo delivers the world's most exclusive and luxurious vehicles directly to your doorstep, no matter where you are. Experience automotive excellence with our global delivery service.</p>
+            <div class="hero-btns animate">
+                <a href="#inventory" class="btn">Explore Inventory</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+        <div class="slide-loader">
+            <div class="slide-indicator active"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+            <div class="slide-indicator"></div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">WHY CHOOSE CARMANYO</h2>
+        <div class="features-grid">
+            <div class="feature-card animate">
+                <i class="fas fa-globe-americas feature-icon"></i>
+                <h3 class="feature-title">Worldwide Delivery</h3>
+                <p class="feature-desc">We ship to any location worldwide. From Tokyo to New York, Dubai to London, your dream car will arrive at your doorstep.</p>
+            </div>
+            <div class="feature-card animate">
+                <i class="fas fa-shield-alt feature-icon"></i>
+                <h3 class="feature-title">Quality Assurance</h3>
+                <p class="feature-desc">Every vehicle undergoes rigorous inspection and certification before delivery. We guarantee authenticity and top condition.</p>
+            </div>
+            <div class="feature-card animate">
+                <i class="fas fa-handshake feature-icon"></i>
+                <h3 class="feature-title">Personalized Service</h3>
+                <p class="feature-desc">Our dedicated concierge team provides white-glove service from selection to delivery, tailored to your specific needs.</p>
+            </div>
+            <div class="feature-card animate">
+                <i class="fas fa-dollar-sign feature-icon"></i>
+                <h3 class="feature-title">Competitive Pricing</h3>
+                <p class="feature-desc">Access exclusive deals and financing options not available elsewhere. We offer the best value in luxury automotive.</p>
+            </div>
+            <div class="feature-card animate">
+                <i class="fas fa-medal feature-icon"></i>
+                <h3 class="feature-title">Rare & Exclusive Models</h3>
+                <p class="feature-desc">Gain access to limited editions, rare classics, and vehicles unavailable through traditional dealerships.</p>
+            </div>
+            <div class="feature-card animate">
+                <i class="fas fa-headset feature-icon"></i>
+                <h3 class="feature-title">24/7 Support</h3>
+                <p class="feature-desc">Our customer service team is available around the clock to answer your questions and assist with your purchase.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Inventory Preview -->
+    <section class="inventory" id="inventory">
+        <h2 class="section-title">FEATURED INVENTORY</h2>
+        <div class="cars-grid">
+            <div class="car-card animate">
+                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Ferrari" class="car-img">
+                <div class="car-info">
+                    <h3 class="car-name">Ferrari 488 GTB</h3>
+                    <p class="car-price">$280,000</p>
+                    <div class="car-specs">
+                        <span>660 HP</span>
+                        <span>0-60: 3.0s</span>
+                        <span>2023</span>
+                    </div>
+                    <a href="#contact" class="btn">Inquire Now</a>
+                </div>
+            </div>
+            <div class="car-card animate">
+                <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Lamborghini" class="car-img">
+                <div class="car-info">
+                    <h3 class="car-name">Lamborghini Huracán</h3>
+                    <p class="car-price">$261,000</p>
+                    <div class="car-specs">
+                        <span>630 HP</span>
+                        <span>0-60: 2.9s</span>
+                        <span>2023</span>
+                    </div>
+                    <a href="#contact" class="btn">Inquire Now</a>
+                </div>
+            </div>
+            <div class="car-card animate">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Rolls Royce" class="car-img">
+                <div class="car-info">
+                    <h3 class="car-name">Rolls-Royce Phantom</h3>
+                    <p class="car-price">$460,000</p>
+                    <div class="car-specs">
+                        <span>563 HP</span>
+                        <span>Luxury Sedan</span>
+                        <span>2023</span>
+                    </div>
+                    <a href="#contact" class="btn">Inquire Now</a>
+                </div>
+            </div>
+            <div class="car-card animate">
+                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Porsche" class="car-img">
+                <div class="car-info">
+                    <h3 class="car-name">Porsche 911 Turbo S</h3>
+                    <p class="car-price">$210,000</p>
+                    <div class="car-specs">
+                        <span>640 HP</span>
+                        <span>0-60: 2.6s</span>
+                        <span>2023</span>
+                    </div>
+                    <a href="#contact" class="btn">Inquire Now</a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#contact" class="btn">View Full Inventory</a>
+        </div>
+    </section>
+    
+    <!-- Contact Form Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">CONTACT US</h2>
+        <div class="form-container">
+            <h3 class="form-title">Let's Find Your Perfect Car</h3>
+            <div class="contact-methods">
+                <p>Contact us directly at:</p>
+                <p class="contact-email">carmanyo5@gmail.com</p>
+                <p>We'll respond within 24 hours with personalized recommendations based on your preferences.</p>
+            </div>
+            <form action="https://formspree.io/f/myzngkyd" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Delivery Location</label>
+                        <input type="text" id="location" name="location" required placeholder="City, Country">
+                    </div>
+                    <div class="form-group full">
+                        <label for="budget">Budget Range (USD)</label>
+                        <select id="budget" name="budget" required>
+                            <option value="" disabled selected>Select your budget range</option>
+                            <option value="under-50k">Under $50,000</option>
+                            <option value="50k-100k">$50,000 - $100,000</option>
+                            <option value="100k-250k">$100,000 - $250,000</option>
+                            <option value="250k-500k">$250,000 - $500,000</option>
+                            <option value="500k-1m">$500,000 - $1,000,000</option>
+                            <option value="over-1m">Over $1,000,000</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label for="preferences">What type of car are you interested in?</label>
+                        <textarea id="preferences" name="preferences" placeholder="Tell us about your dream car - brand, model, features, color preferences, etc."></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label for="timeline">When are you looking to purchase?</label>
+                        <select id="timeline" name="timeline" required>
+                            <option value="" disabled selected>Select your timeline</option>
+                            <option value="immediately">Immediately</option>
+                            <option value="within-1-month">Within 1 month</option>
+                            <option value="within-3-months">Within 3 months</option>
+                            <option value="within-6-months">Within 6 months</option>
+                            <option value="just-looking">Just looking/researching</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label for="message">Additional Information</label>
+                        <textarea id="message" name="message" placeholder="Any other details you'd like to share with us?"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn submit-btn">Submit Request</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <h3 class="footer-logo">CARMANYO</h3>
+        <p>Delivering dreams to your doorstep, worldwide.</p>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#features">Why Choose Us</a>
+            <a href="#inventory">Inventory</a>
+            <a href="#contact">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="copyright">© 2023 Carmanyo. All rights reserved. For inquiries, contact us at <strong>carmanyo5@gmail.com</strong></p>
+    </footer>
+    
+    <script>
+        // Slide Show Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.slide-indicator');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+        
+        // Change slide every 10 seconds
+        setInterval(nextSlide, 10000);
+        
+        // Add click functionality to indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
+        });
+        
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.animate');
+        
+        function checkIfInView() {
+            animateElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = "1";
+                    element.style.transform = "translateY(0)";
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkIfInView);
+        window.addEventListener('load', checkIfInView);
+        
+        // Set initial styles for animation
+        animateElements.forEach(element => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(30px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        });
+    </script>
+</body>
+</html>
